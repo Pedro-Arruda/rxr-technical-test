@@ -1,13 +1,10 @@
 import Order from '../entities/order.js';
-import OrderRepository from '../repositories/order-repository.js';
-import CustomerRepository from '../repositories/customer-repository.js';
-import DishRepository from '../repositories/dish-repository.js';
 
 export default class CreateOrder {
-  constructor() {
-    this.orderRepository = new OrderRepository();
-    this.customerRepository = new CustomerRepository();
-    this.dishRepository = new DishRepository();
+  constructor(dishRepository, orderRepository, customerRepository) {
+    this.dishRepository = dishRepository;
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository;
   }
 
   async execute(orderData) {

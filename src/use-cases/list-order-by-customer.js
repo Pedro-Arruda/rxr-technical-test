@@ -1,10 +1,7 @@
-import OrderRepository from '../repositories/order-repository.js';
-import CustomerRepository from '../repositories/customer-repository.js';
-
 export default class ListOrdersByCustomer {
-  constructor() {
-    this.orderRepository = new OrderRepository();
-    this.customerRepository = new CustomerRepository();
+  constructor(orderRepository, customerRepository) {
+    this.orderRepository = orderRepository;
+    this.customerRepository = customerRepository  
   }
 
   async execute(customerId, page = 1, limit = 10) {

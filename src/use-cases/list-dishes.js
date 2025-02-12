@@ -1,8 +1,7 @@
-import DishRepository from '../repositories/dish-repository';
 
 export default class ListDishes {
-  constructor() {
-    this.dishRepository = new DishRepository();
+  constructor(dishRepository) {
+    this.dishRepository = dishRepository;
   }
 
   async execute(category = null, page = 1, limit = 10) {

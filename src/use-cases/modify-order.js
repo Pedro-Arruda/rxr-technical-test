@@ -1,10 +1,7 @@
-import OrderRepository from '../repositories/order-repository.js';
-import DishRepository from '../repositories/dish-repository.js';
-
 export default class ModifyOrder {
-  constructor() {
-    this.orderRepository = new OrderRepository();
-    this.dishRepository = new DishRepository();
+  constructor(orderRepository, dishRepository) {
+    this.orderRepository = orderRepository;
+    this.dishRepository = dishRepository  
   }
 
   async execute(orderId, newItems) {

@@ -1,8 +1,6 @@
-import OrderRepository from '../repositories/order-repository.js';
-
 export default class UpdateOrderStatus {
-  constructor() {
-    this.orderRepository = new OrderRepository();
+  constructor(orderRepository) {
+    this.orderRepository = orderRepository;
   }
 
   async execute(orderId, newStatus) {

@@ -1,9 +1,8 @@
 import Dish from '../entities/dish.js';
-import DishRepository from '../repositories/dish-repository.js';
 
 export default class CreateDish {
-  constructor() {
-    this.dishRepository = new DishRepository();
+  constructor(dishRepository) {
+    this.dishRepository = dishRepository;
   }
 
   async execute(dishData) {

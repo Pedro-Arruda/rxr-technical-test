@@ -1,9 +1,8 @@
 import Customer from '../entities/customer.js';
-import CustomerRepository from '../repositories/customer-repository.js';
 
 export default class CreateCustomer {
-  constructor() {
-    this.customerRepository = new CustomerRepository();
+  constructor(customerRepository) {
+    this.customerRepository = customerRepository;
   }
 
   async execute(customerData) {
