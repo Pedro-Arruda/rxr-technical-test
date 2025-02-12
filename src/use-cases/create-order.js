@@ -11,6 +11,7 @@ export default class CreateOrder {
     const { customer_id, items } = orderData;
 
     const customer = await this.customerRepository.findById(customer_id);
+    
     if (!customer) {
       throw new Error('Customer not found');
     }

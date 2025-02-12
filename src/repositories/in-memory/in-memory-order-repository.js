@@ -5,7 +5,7 @@ export default class InMemoryOrderRepository {
     }
   
     async create(orderData) {
-      const order = { id: this.orders.length + 1, ...orderData };
+      const order = { id: this.orders.length + 1,status: orderData.status ?? 'pending', ...orderData };
       this.orders.push(order);
   
       for (const item of orderData.items) {

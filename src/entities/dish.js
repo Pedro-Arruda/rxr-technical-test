@@ -1,7 +1,5 @@
-// src/entities/dish.js
 import { z } from 'zod';
 
-// Esquema de validação para Dish
 const dishSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1, 'Name is required'),
