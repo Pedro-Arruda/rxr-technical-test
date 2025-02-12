@@ -1,6 +1,6 @@
-import Dish from '../infra/database/models/dish';
+import Dish from '../../infra/database/models/dish';
 
-export default class DishRepository {
+export default class SequelizeDishRepository {
   async create(dishData) {
     return Dish.create(dishData);
   }

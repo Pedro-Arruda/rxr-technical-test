@@ -1,8 +1,8 @@
-import Order from '../infra/database/models/order.js';
-import OrderItem from '../infra/database/models/order-item.js';
-import Dish from '../infra/database/models/dish.js';
+import Order from '../../infra/database/models/order.js';
+import OrderItem from '../../infra/database/models/order-item.js';
+import Dish from '../../infra/database/models/dish.js';
 
-export default class OrderRepository {
+export default class SequelizeOrderRepository {
   async create(orderData) {
     const { customer_id, items } = orderData;
 

@@ -1,6 +1,6 @@
-import OrderItem from '../infra/database/models/order-item.js'; 
+import OrderItem from '../../infra/database/models/order-item.js'; 
 
-export default class OrderItemRepository {
+export default class SequelizeOrderItemRepository {
   async create(orderItemData) {
     return OrderItem.create(orderItemData);
   }
