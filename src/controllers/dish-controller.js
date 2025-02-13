@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import {makeCreateDish} from '../factories/make-create-dish.js'
-import {makeListDish} from '../factories/make-list-dish.js'
+import {makeListDish} from '../factories/make-list-dishes.js'
 
 const createDishSchema = z.object({
   name: z.string().min(1, 'Name is required'),
