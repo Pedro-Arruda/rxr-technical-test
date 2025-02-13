@@ -1,4 +1,4 @@
-import Order from '../entities/order.js';
+import Order from "../entities/order.js";
 
 export default class CreateOrder {
   constructor(dishRepository, orderRepository, customerRepository) {
@@ -11,9 +11,9 @@ export default class CreateOrder {
     const { customer_id, items } = orderData;
 
     const customer = await this.customerRepository.findById(customer_id);
-    
+
     if (!customer) {
-      throw new Error('Customer not found');
+      throw new Error("Customer not found");
     }
 
     for (const item of items) {

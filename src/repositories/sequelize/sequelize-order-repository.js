@@ -1,6 +1,6 @@
-import Order from '../../infra/database/models/order.js';
-import OrderItem from '../../infra/database/models/order-item.js';
-import Dish from '../../infra/database/models/dish.js';
+import Order from "../../infra/database/models/order.js";
+import OrderItem from "../../infra/database/models/order-item.js";
+import Dish from "../../infra/database/models/dish.js";
 
 export default class SequelizeOrderRepository {
   async create(orderData) {
@@ -9,14 +9,14 @@ export default class SequelizeOrderRepository {
     const totalValue = await this.calculateTotalValue(items);
 
     const order = await Order.create({
-      customer_id,
-      total_value: totalValue,
-      status: 'pending',
+      customerId: customer_id,
+      totalValue,
+      status: "pending",
     });
 
     const orderItems = items.map((item) => ({
-      order_id: order.id,
-      menu_item_id: item.menu_item_id,
+      orderId: order.dataValues.id,
+      dishId: item.menu_item_id,
       quantity: item.quantity,
     }));
 
@@ -26,47 +26,61 @@ export default class SequelizeOrderRepository {
   }
 
   async findById(id) {
-    return Order.findByPk(id, {
-      include: [
-        {
-          model: OrderItem,
-          as: 'items',
-          include: [
-            {
-              model: Dish,
-              as: 'dish',
-            },
-          ],
-        },
-      ],
+    const order = await Order.findOne({
+      where: { id },
+      raw: true,
     });
+
+    if (!order) return null;
+
+    const orderItems = await OrderItem.findAll({
+      where: { orderId: id },
+      raw: true,
+    });
+
+    for (const item of orderItems) {
+      item.dish = await Dish.findOne({ where: { id: item.dishId }, raw: true });
+    }
+
+    return {
+      ...order,
+      items: orderItems,
+    };
   }
 
   async findByCustomer(customerId, page = 1, limit = 10) {
     const offset = (page - 1) * limit;
-    return Order.findAndCountAll({
-      where: { customer_id: customerId },
-      include: [
-        {
-          model: OrderItem,
-          as: 'items',
-          include: [
-            {
-              model: Dish,
-              as: 'dish',
-            },
-          ],
-        },
-      ],
+
+    const orders = await Order.findAll({
+      where: { customerId },
       limit,
       offset,
+      raw: true,
     });
+
+    if (!orders.length) return { count: 0, rows: [] };
+
+    for (const order of orders) {
+      order.items = await OrderItem.findAll({
+        where: { orderId: order.id },
+        raw: true,
+      });
+
+      for (const item of order.items) {
+        item.dish = await Dish.findOne({
+          where: { id: item.dishId },
+          raw: true,
+        });
+      }
+    }
+
+    return { orders };
   }
 
   async updateStatus(id, status) {
     const order = await Order.findByPk(id);
     if (!order) {
-      throw new Error('Order not found');
+      throw new Error("Order not found");
     }
     return order.update({ status });
   }
@@ -74,7 +88,7 @@ export default class SequelizeOrderRepository {
   async delete(id) {
     const order = await Order.findByPk(id);
     if (!order) {
-      throw new Error('Order not found');
+      throw new Error("Order not found");
     }
     return order.destroy();
   }
@@ -89,5 +103,24 @@ export default class SequelizeOrderRepository {
       totalValue += dish.price * item.quantity;
     }
     return totalValue;
+  }
+
+  async modifyOrder(orderId, items) {
+    const order = await Order.findByPk(orderId);
+
+    await OrderItem.destroy({ where: { orderId } });
+
+    const orderItems = items.map((item) => ({
+      orderId,
+      dishId: item.menu_item_id,
+      quantity: item.quantity,
+    }));
+
+    await OrderItem.bulkCreate(orderItems);
+
+    const totalValue = await this.calculateTotalValue(items);
+    await order.update({ totalValue });
+
+    return this.findById(orderId);
   }
 }

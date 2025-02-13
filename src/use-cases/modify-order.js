@@ -1,17 +1,17 @@
 export default class ModifyOrder {
   constructor(orderRepository, dishRepository) {
     this.orderRepository = orderRepository;
-    this.dishRepository = dishRepository  
+    this.dishRepository = dishRepository;
   }
 
   async execute(orderId, newItems) {
     const order = await this.orderRepository.findById(orderId);
     if (!order) {
-      throw new Error('Order not found');
+      throw new Error("Order not found");
     }
 
-    if (order.status !== 'pending' && order.status !== 'preparing') {
-      throw new Error('Order cannot be modified');
+    if (order.status !== "pending" && order.status !== "preparing") {
+      throw new Error("Order cannot be modified");
     }
 
     for (const item of newItems) {
@@ -21,6 +21,6 @@ export default class ModifyOrder {
       }
     }
 
-    return this.orderRepository.updateOrderItems(orderId, newItems);
+    return this.orderRepository.modifyOrder(orderId, newItems);
   }
 }
