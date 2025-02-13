@@ -1,30 +1,30 @@
-import { z } from 'zod';
-import {makeCreateOrder} from '../factories/make-create-order.js'
-import {makeListOrderByCustomer} from '../factories/make-list-order-by-customers.js'
-import {MakeUpdateOrderStatus} from '../factories/make-update-status-order.js'
-import {makeModifyOrder} from '../factories/make-modify-order.js'
+import { z } from "zod";
+import { makeCreateOrder } from "../factories/make-create-order.js";
+import { makeListOrderByCustomer } from "../factories/make-list-order-by-customers.js";
+import { MakeUpdateOrderStatus } from "../factories/make-update-status-order.js";
+import { makeModifyOrder } from "../factories/make-modify-order.js";
 
 const createOrderSchema = z.object({
-  customer_id: z.number().min(1, 'Customer ID is required'),
+  customer_id: z.number().min(1, "Customer ID is required"),
   items: z.array(
     z.object({
-      menu_item_id: z.number().min(1, 'Menu item ID is required'),
-      quantity: z.number().min(1, 'Quantity must be greater than zero'),
+      menu_item_id: z.number().min(1, "Menu item ID is required"),
+      quantity: z.number().min(1, "Quantity must be greater than zero"),
     })
   ),
 });
 
 const updateOrderStatusSchema = z.object({
-  status: z.enum(['pending', 'preparing', 'ready', 'delivered', 'canceled'], {
-    message: 'Invalid status',
+  status: z.enum(["pending", "preparing", "ready", "delivered", "canceled"], {
+    message: "Invalid status",
   }),
 });
 
 const modifyOrderSchema = z.object({
   items: z.array(
     z.object({
-      menu_item_id: z.number().min(1, 'Menu item ID is required'),
-      quantity: z.number().min(1, 'Quantity must be greater than zero'),
+      menu_item_id: z.number().min(1, "Menu item ID is required"),
+      quantity: z.number().min(1, "Quantity must be greater than zero"),
     })
   ),
 });
@@ -50,7 +50,11 @@ export default class OrderController {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
 
-      const result = await listOrdersByCustomer.execute(customerId, page, limit);
+      const result = await listOrdersByCustomer.execute(
+        customerId,
+        page,
+        limit
+      );
 
       res.status(200).json(result);
     } catch (error) {
@@ -65,7 +69,10 @@ export default class OrderController {
 
       const validatedData = updateOrderStatusSchema.parse(req.body);
 
-      const order = await updateOrderStatus.execute(orderId, validatedData.status);
+      const order = await updateOrderStatus.execute(
+        orderId,
+        validatedData.status
+      );
 
       res.status(200).json(order);
     } catch (error) {

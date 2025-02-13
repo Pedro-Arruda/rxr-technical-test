@@ -1,5 +1,3 @@
-const env = await import("../../../utils/env.js").then((mod) => mod.env);
-
 export default async () => {
   const env = await import("../../../utils/env.js").then((mod) => mod.env);
 
