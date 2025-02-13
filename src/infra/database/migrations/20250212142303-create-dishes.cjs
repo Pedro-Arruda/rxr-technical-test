@@ -1,8 +1,8 @@
-const { DataTypes } = require ('sequelize');
+const { DataTypes } = require("sequelize");
 
-module.exports ={
+module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Dishes', {
+    await queryInterface.createTable("dishes", {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -21,20 +21,22 @@ module.exports ={
         allowNull: false,
       },
       category: {
-        type: DataTypes.ENUM('starter', 'main_course', 'dessert', 'drink'),
+        type: DataTypes.ENUM("starter", "main_course", "dessert", "drink"),
         allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Dishes');
+    await queryInterface.dropTable("dishes");
   },
 };
