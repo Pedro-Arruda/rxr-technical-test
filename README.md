@@ -28,7 +28,7 @@ This is a backend API for managing restaurant orders, built with Node.js, Postgr
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/your-username/restaurant-order-manager.git
+   git clone https://github.com/Pedro-Arruda/rxr-technical-test
    cd restaurant-order-manager
    ```
 
