@@ -1,4 +1,3 @@
-
 export default class ListDishes {
   constructor(dishRepository) {
     this.dishRepository = dishRepository;

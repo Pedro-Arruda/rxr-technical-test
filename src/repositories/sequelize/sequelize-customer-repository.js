@@ -1,4 +1,4 @@
-import Customer from '../../infra/database/models/customer';
+import Customer from '../../infra/database/models/customer.js';
 
 export default class SequelizeCustomerRepository {
   async create(customerData) {

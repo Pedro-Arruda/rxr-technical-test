@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { makeCreateCustomer } from '../factories/make-create-customer';
+import { makeCreateCustomer } from '../factories/make-create-customer.js';
 
 const createCustomerSchema = z.object({
   name: z.string().min(1, 'Name is required'),

@@ -1,5 +1,5 @@
-import CreateCustomerUseCase from '../use-cases/create-customer';
-import CustomerRepository from '../repositories/sequelize/sequelize-customer-repository';
+import CreateCustomerUseCase from '../use-cases/create-customer.js';
+import CustomerRepository from '../repositories/sequelize/sequelize-customer-repository.js';
 
 export function makeCreateCustomer() {
   const customerRepository = new CustomerRepository();

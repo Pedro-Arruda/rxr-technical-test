@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import {makeCreateOrder} from '../factories/make-create-order'
-import {makeListOrderByCustomer} from '../factories/make-list-order-by-customers'
-import {MakeUpdateOrderStatus} from '../factories/make-update-status-order'
-import {makeModifyOrder} from '../factories/make-modify-order'
+import {makeCreateOrder} from '../factories/make-create-order.js'
+import {makeListOrderByCustomer} from '../factories/make-list-order-by-customers.js'
+import {MakeUpdateOrderStatus} from '../factories/make-update-status-order.js'
+import {makeModifyOrder} from '../factories/make-modify-order.js'
 
 const createOrderSchema = z.object({
   customer_id: z.number().min(1, 'Customer ID is required'),
