@@ -3,7 +3,6 @@ import { customerRoutes } from "./routes/customer-routes.js";
 import { dishRoutes } from "./routes/dish-routes.js";
 import { orderRoutes } from "./routes/order-routes.js";
 import setupSwagger from "./infra/swagger.js";
-import errorHandler from "./middlewares/error-handler.js";
 
 export const app = express();
 
