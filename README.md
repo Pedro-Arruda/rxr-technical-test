@@ -29,7 +29,7 @@ This is a backend API for managing restaurant orders, built with Node.js, Postgr
 
    ```bash
    git clone https://github.com/Pedro-Arruda/rxr-technical-test
-   cd restaurant-order-manager
+   cd rxr-technical-test
    ```
 
 2. Install dependencies
