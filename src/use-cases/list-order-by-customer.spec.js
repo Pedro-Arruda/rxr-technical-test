@@ -1,17 +1,22 @@
-import ListOrdersByCustomer from './list-order-by-customer.js';
-import InMemoryOrderRepository from '../repositories/in-memory/in-memory-order-repository.js';
-import InMemoryCustomerRepository from '../repositories/in-memory/in-memory-customer-repository.js';
+import ListOrdersByCustomer from "./list-order-by-customer.js";
+import InMemoryOrderRepository from "../repositories/in-memory/in-memory-order-repository.js";
+import InMemoryCustomerRepository from "../repositories/in-memory/in-memory-customer-repository.js";
+import InMemoryDishRepository from "../repositories/in-memory/in-memory-dish-repository.js";
 
-describe('ListOrdersByCustomer', () => {
-  it('should list orders by customer', async () => {
+describe("ListOrdersByCustomer", () => {
+  it("should list orders by customer", async () => {
+    const dishRepository = new InMemoryDishRepository();
     const customerRepository = new InMemoryCustomerRepository();
-    const orderRepository = new InMemoryOrderRepository();
-    const listOrdersByCustomer = new ListOrdersByCustomer(orderRepository, customerRepository);
+    const orderRepository = new InMemoryOrderRepository(dishRepository);
+    const listOrdersByCustomer = new ListOrdersByCustomer(
+      orderRepository,
+      customerRepository
+    );
 
     const customer = await customerRepository.create({
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '1234567890',
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "1234567890",
     });
 
     const order1 = await orderRepository.create({
@@ -32,11 +37,16 @@ describe('ListOrdersByCustomer', () => {
     expect(result.rows[1].id).toBe(order2.id);
   });
 
-  it('should throw an error if customer does not exist', async () => {
+  it("should throw an error if customer does not exist", async () => {
     const customerRepository = new InMemoryCustomerRepository();
     const orderRepository = new InMemoryOrderRepository();
-    const listOrdersByCustomer = new ListOrdersByCustomer(orderRepository, customerRepository);
+    const listOrdersByCustomer = new ListOrdersByCustomer(
+      orderRepository,
+      customerRepository
+    );
 
-    await expect(listOrdersByCustomer.execute(999)).rejects.toThrow('Customer not found');
+    await expect(listOrdersByCustomer.execute(999)).rejects.toThrow(
+      "Customer not found"
+    );
   });
 });
